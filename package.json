@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@emotion/css": "^11.7.1",
-    "@sno2wiki/editor": "link:editor",
+    "@sno2wiki/editor": "link:packages/editor",
     "direction": "^2.0.1",
     "nanoid": "^3.2.0",
     "react": "^17.0.2",
