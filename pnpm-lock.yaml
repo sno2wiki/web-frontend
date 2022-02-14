@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@emotion/css': ^11.7.1
   '@sno2wiki/editor': link:packages/editor
+  '@sno2wiki/viewer': link:packages/viewer
   '@swc/core': ^1.2.138
   '@swc/jest': ^0.2.17
   '@tsconfig/node16': ^1.0.2
@@ -39,6 +40,7 @@ specifiers:
 dependencies:
   '@emotion/css': 11.7.1
   '@sno2wiki/editor': link:packages/editor
+  '@sno2wiki/viewer': link:packages/viewer
   direction: 2.0.1
   nanoid: 3.2.0
   react: 17.0.2
