@@ -1,3 +1,6 @@
 [submodule "packages/editor"]
 	path = packages/editor
 	url = https://github.com/sno2wiki/wysiwyg-with-contenteditable
+[submodule "packages/viewer"]
+	path = packages/viewer
+	url = git@github.com:sno2wiki/web-viewer.git
