@@ -1,34 +1,45 @@
 import { Line } from "@sno2wiki/viewer";
-import { useCallback, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { calcViewDocumentEndpoint } from "~/common/endpoint";
-import { useWebSocket } from "~/hooks/useWebSocket";
 
-export const useViewer = ({ documentId }: { documentId: string; }): {
+export const useViewer = (
+  { userId, documentId }: { documentId: string; userId: string | undefined; },
+): {
   lines: Line[] | undefined;
 } => {
+  const wsRef = useRef<WebSocket | undefined>(undefined);
   const [lines, setLines] = useState<Line[] | undefined>(undefined);
-  const pullDocument = useCallback(
-    (nextLines: Line[], head: string) => {
-      setLines(nextLines);
-    },
-    [],
-  );
 
   const endpoint = useMemo(() => calcViewDocumentEndpoint(documentId), [documentId]);
-  const [ws] = useWebSocket(endpoint, {
-    onOpen(event, ws) {
-      // ws.send(JSON.stringify({ type: "JOIN", userId }));
-    },
-    onMessage(event) {
+  useEffect(() => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.close();
+    }
+
+    const newSocket = new WebSocket(endpoint);
+    newSocket.addEventListener("open", (event) => {
+      newSocket.send(JSON.stringify({
+        type: "JOIN",
+        userId: userId || null,
+      }));
+    });
+    newSocket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
       switch (data.type) {
         case "PULL_DOCUMENT":
-          pullDocument(data.lines, data.head);
+          setLines(data.lines);
           break;
       }
-    },
-  });
+    });
+    wsRef.current = newSocket;
+
+    return () => {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+      }
+    };
+  }, [endpoint, userId]);
 
   return { lines };
 };
