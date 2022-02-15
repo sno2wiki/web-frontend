@@ -8,7 +8,10 @@ import { useAuth } from "~/hooks/useAuth";
 import { useEditor } from "~/hooks/useEditor";
 import { useViewer } from "~/hooks/useViewer";
 
-export const EditorWrapper: React.VFC<{ documentId: string; userId: string; }> = ({ documentId, userId }) => {
+export const EditorWrapper: React.VFC<{
+  documentId: string;
+  userId: string;
+}> = ({ documentId, userId }) => {
   const { pushCommits, lines } = useEditor({ documentId, userId });
   return (
     <div>
@@ -16,7 +19,7 @@ export const EditorWrapper: React.VFC<{ documentId: string; userId: string; }> =
       {lines
         && (
           <Editor
-            synchedLines={lines}
+            lines={lines}
             pushCommits={(commits) => {
               pushCommits(commits);
             }}
@@ -28,8 +31,11 @@ export const EditorWrapper: React.VFC<{ documentId: string; userId: string; }> =
   );
 };
 
-export const ViewerWrapper: React.VFC<{ documentId: string; }> = ({ documentId }) => {
-  const { lines } = useViewer({ documentId });
+export const ViewerWrapper: React.VFC<{
+  documentId: string;
+  userId: string | undefined;
+}> = ({ documentId, userId }) => {
+  const { lines } = useViewer({ documentId, userId });
   return (
     <div>
       {!lines && <p>LOADING</p>}
@@ -40,13 +46,13 @@ export const ViewerWrapper: React.VFC<{ documentId: string; }> = ({ documentId }
 
 export const DocumentPage: React.VFC = () => {
   const { id: documentId } = useParams<"id">();
-  const user = useAuth();
+  const auth = useAuth();
 
   return (
     <>
       {!documentId && <p>LOADING</p>}
-      {documentId && <ViewerWrapper documentId={documentId} />}
-      {documentId && !!user && <EditorWrapper documentId={documentId} userId={user.userId} />}
+      {documentId && !auth.loading && <ViewerWrapper documentId={documentId} userId={auth.user?.uid} />}
+      {documentId && !auth.loading && auth.user && <EditorWrapper documentId={documentId} userId={auth.user.uid} />}
     </>
   );
 };
