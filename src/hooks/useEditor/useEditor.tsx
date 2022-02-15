@@ -11,7 +11,7 @@ export const useEditor = ({ documentId, userId }: { documentId: string; userId: 
   pushCommits(newCommits: CommitUnion[]): void;
   pushed: boolean;
 } => {
-  const [lines, setLines] = useState<Line[] | undefined>([{ id: "A", text: "A" }]);
+  const [lines, setLines] = useState<Line[] | undefined>();
   const [commits, setCommits] = useState<CommitUnion[]>([]);
   const pullDocument = useCallback(
     (nextLines: Line[], head: string) => {
