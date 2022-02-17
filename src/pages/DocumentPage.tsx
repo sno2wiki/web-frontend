@@ -10,9 +10,9 @@ import { useViewer } from "~/hooks/useViewer";
 
 export const EditorWrapper: React.VFC<{
   documentId: string;
-  userId: string;
-}> = ({ documentId, userId }) => {
-  const { pushCommits, lines } = useEditor({ documentId, userId });
+  ticket: string;
+}> = ({ documentId, ticket }) => {
+  const { pushCommits, lines } = useEditor({ documentId, ticket });
   return (
     <div>
       {!lines && <p>LOADING</p>}
@@ -31,11 +31,8 @@ export const EditorWrapper: React.VFC<{
   );
 };
 
-export const ViewerWrapper: React.VFC<{
-  documentId: string;
-  userId: string | undefined;
-}> = ({ documentId, userId }) => {
-  const { lines } = useViewer({ documentId, userId });
+export const ViewerWrapper: React.VFC<{ documentId: string; }> = ({ documentId }) => {
+  const { lines } = useViewer({ documentId });
   return (
     <div>
       {!lines && <p>LOADING</p>}

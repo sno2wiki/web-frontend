@@ -1,15 +1,15 @@
 import { CommitUnion, Line } from "@sno2wiki/editor";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { calcEditDocumentEndpoint } from "~/common/endpoint";
+import { getEditDocWSEndpoint } from "~/common/endpoint";
 const PUSH_COMMITS_TIMEOUT = 1000;
 
-export const useEditor = ({ documentId, userId }: { documentId: string; userId: string; }): {
+export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: string; }): {
   lines: Line[] | undefined;
   pushCommits(newCommits: CommitUnion[]): void;
   pushed: boolean;
 } => {
-  const endpoint = useMemo(() => calcEditDocumentEndpoint(documentId), [documentId]);
+  const endpoint = useMemo(() => getEditDocWSEndpoint(documentId), [documentId]);
 
   const wsRef = useRef<WebSocket | undefined>(undefined);
   const commitTimeoutRef = useRef<NodeJS.Timer>();
@@ -24,7 +24,7 @@ export const useEditor = ({ documentId, userId }: { documentId: string; userId: 
 
     const newSocket = new WebSocket(endpoint);
     newSocket.addEventListener("open", (event) => {
-      newSocket.send(JSON.stringify({ type: "JOIN", userId }));
+      newSocket.send(JSON.stringify({ type: "JOIN" }));
     });
     newSocket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
@@ -40,7 +40,7 @@ export const useEditor = ({ documentId, userId }: { documentId: string; userId: 
     return () => {
       if (wsRef.current) wsRef.current.close();
     };
-  }, [endpoint, userId]);
+  }, [endpoint]);
 
   const buffer = useMemo(() => {
     if (!head) return commits;
