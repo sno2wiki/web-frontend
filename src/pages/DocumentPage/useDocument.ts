@@ -21,8 +21,9 @@ export const useDocument = (documentId: string | undefined) => {
 
     (async () => {
       const headers = {
+        "Cache-Control": "no-store",
         ...(token
-          ? { Authorization: `Bearer ${token}` }
+          ? { "Authorization": `Bearer ${token}` }
           : {}),
       };
       const { ok, json } = await fetch(endpoint, { headers });
