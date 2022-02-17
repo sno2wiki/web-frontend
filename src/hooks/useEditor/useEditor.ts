@@ -24,8 +24,7 @@ export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: 
 
     const newSocket = new WebSocket(endpoint);
     newSocket.addEventListener("open", (event) => {
-      console.log("?");
-      newSocket.send(JSON.stringify({ type: "JOIN" }));
+      newSocket.send(JSON.stringify({ type: "JOIN", ticket }));
     });
     newSocket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);

@@ -35,7 +35,5 @@ export const useDocument = (documentId: string | undefined) => {
     })();
   }, [endpoint, token]);
 
-  console.dir(result);
-
   return result;
 };
