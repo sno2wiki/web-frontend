@@ -2,7 +2,7 @@ import { CommitUnion, Line } from "@sno2wiki/editor";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { getEditDocWSEndpoint } from "~/common/endpoint";
-const PUSH_COMMITS_TIMEOUT = 1000;
+const PUSH_COMMITS_TIMEOUT = 250;
 
 export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: string; }): {
   lines: Line[] | undefined;
@@ -24,6 +24,7 @@ export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: 
 
     const newSocket = new WebSocket(endpoint);
     newSocket.addEventListener("open", (event) => {
+      console.log("?");
       newSocket.send(JSON.stringify({ type: "JOIN" }));
     });
     newSocket.addEventListener("message", (event) => {
@@ -31,16 +32,15 @@ export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: 
       switch (data.type) {
         case "PULL_DOCUMENT":
           setLines(() => data.lines);
-          setHead(() => data.head);
           break;
       }
     });
     wsRef.current = newSocket;
 
     return () => {
-      if (wsRef.current) wsRef.current.close();
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) wsRef.current.close();
     };
-  }, [endpoint]);
+  }, [endpoint, ticket]);
 
   const buffer = useMemo(() => {
     if (!head) return commits;
@@ -58,7 +58,9 @@ export const useEditor = ({ documentId, ticket }: { documentId: string; ticket: 
     setPushed(false);
     commitTimeoutRef.current = setTimeout(() => {
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        wsRef.current.send(JSON.stringify({ type: "PUSH_COMMITS", lines, commits: buffer }));
+        wsRef.current.send(JSON.stringify({ type: "PUSH_COMMITS", ticket, lines, commits: buffer }));
+
+        setHead(() => buffer[buffer.length - 1].id);
         setPushed(true);
       }
     }, PUSH_COMMITS_TIMEOUT);
