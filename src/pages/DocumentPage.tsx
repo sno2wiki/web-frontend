@@ -1,10 +1,12 @@
 import { Editor } from "@sno2wiki/editor";
 import { Viewer } from "@sno2wiki/viewer";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+import fetch from "unfetch";
 
+import { getGetDocHttpEndpoint } from "~/common/endpoint";
 import { generateCommitId, generateLineId } from "~/common/id";
-import { useAuth } from "~/hooks/useAuth";
+import { useAuthToken } from "~/hooks/useAuth";
 import { useEditor } from "~/hooks/useEditor";
 import { useViewer } from "~/hooks/useViewer";
 
@@ -41,15 +43,71 @@ export const ViewerWrapper: React.VFC<{ documentId: string; }> = ({ documentId }
   );
 };
 
+export const useDocument = (
+  documentId: string | undefined,
+) => {
+  const [token] = useAuthToken();
+  const [result, setResult] = useState<
+    | { loaded: false; }
+    | { loaded: true; status: "bad"; }
+    | { loaded: true; status: "ok"; data: { documentId: string; ticket: null; }; }
+    | { loaded: true; status: "ok"; data: { documentId: string; ticket: string; }; }
+  >({ loaded: false });
+  const endpoint = useMemo(() => documentId && getGetDocHttpEndpoint(documentId), [documentId]);
+
+  useEffect(() => {
+    if (!endpoint) return;
+
+    (async () => {
+      const headers = {
+        ...(token
+          ? { Authorization: `Bearer ${token}` }
+          : {}),
+      };
+      const { ok, json } = await fetch(endpoint, { headers });
+      if (!ok) setResult({ loaded: true, status: "bad" });
+
+      const { documentId, ticket } = await json();
+      setResult({ loaded: true, status: "ok", data: { documentId, ticket } });
+    })();
+  }, [endpoint, token]);
+
+  console.dir(result);
+
+  return result;
+};
+
 export const DocumentPage: React.VFC = () => {
   const { id: documentId } = useParams<"id">();
-  const auth = useAuth();
+  const document = useDocument(documentId);
 
   return (
     <>
-      {!documentId && <p>LOADING</p>}
-      {documentId && !auth.loading && <ViewerWrapper documentId={documentId} userId={auth.user?.uid} />}
-      {documentId && !auth.loading && auth.user && <EditorWrapper documentId={documentId} userId={auth.user.uid} />}
+      {!document.loaded && <p>LOADING</p>}
+      {document.loaded && (
+        <>
+          {document.status === "bad" && (
+            <>
+              <p>Document cannot view</p>
+            </>
+          )}
+          {document.status === "ok" && (
+            <>
+              {document.data.ticket === null && (
+                <ViewerWrapper
+                  documentId={document.data.documentId}
+                />
+              )}
+              {document.data.ticket !== null && (
+                <EditorWrapper
+                  documentId={document.data.documentId}
+                  ticket={document.data.ticket}
+                />
+              )}
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

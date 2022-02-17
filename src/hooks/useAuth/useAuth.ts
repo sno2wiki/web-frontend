@@ -1,3 +1,4 @@
+import { useSessionStorage } from "react-use";
 import { atom, useRecoilValue } from "recoil";
 
 export const atomUser = atom<
@@ -14,4 +15,11 @@ export const useAuth = ():
   const user = useRecoilValue(atomUser);
   if (user === undefined) return { loading: true };
   else return { loading: false, user };
+};
+
+export const useAuthToken = (): [string | null, (newToken: string) => void] => {
+  const [token, setToken] = useSessionStorage<string | null>("sno2wiki-token", null);
+
+  const updateToken = (newToken: string) => setToken(newToken);
+  return [token, updateToken];
 };

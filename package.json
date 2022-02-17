@@ -25,7 +25,8 @@
     "react-use": "^17.3.2",
     "recoil": "^0.6.1",
     "the-new-css-reset": "^1.4.7",
-    "ulid": "^2.3.0"
+    "ulid": "^2.3.0",
+    "unfetch": "^4.2.0"
   },
   "devDependencies": {
     "@swc/core": "^1.2.138",
