@@ -29,6 +29,7 @@ export const useDocument = (documentId: string | undefined) => {
       const { ok, json } = await fetch(endpoint, { headers });
       if (!ok) {
         setResult({ loaded: true, status: "bad" });
+        return;
       }
 
       const { documentId, ticket } = await json();
