@@ -37,6 +37,7 @@ specifiers:
   ulid: ^2.3.0
   unfetch: ^4.2.0
   vite: ^2.7.13
+  vite-plugin-rewrite-all: ^0.1.2
   vite-tsconfig-paths: ^3.4.0
 
 dependencies:
@@ -78,6 +79,7 @@ devDependencies:
   npm-run-all: 4.1.5
   typescript: 4.5.5
   vite: 2.7.13
+  vite-plugin-rewrite-all: 0.1.2_vite@2.7.13
   vite-tsconfig-paths: 3.4.0_vite@2.7.13
 
 packages:
@@ -1642,6 +1644,11 @@ packages:
 
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    dev: true
+
+  /connect-history-api-fallback/1.6.0:
+    resolution: {integrity: sha512-e54B99q/OUoH64zYYRf3HBP5z24G38h5D3qXu23JGRoigpX5Ss4r9ZnDk3g0Z8uQC2x2lPaJ+UlWBc1ZWBWdLg==}
+    engines: {node: '>=0.8'}
     dev: true
 
   /convert-source-map/1.8.0:
@@ -4656,6 +4663,16 @@ packages:
     dependencies:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
+    dev: true
+
+  /vite-plugin-rewrite-all/0.1.2_vite@2.7.13:
+    resolution: {integrity: sha512-hBFuG043kbixgZ/ke9SzKhkO6P8a5ryxD0CmZTe+/Cz17RIKi7uSeNUJy79V4FgavZ7pWVRg0tqVwJ7lP/A2/Q==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      vite: ^2.0.2
+    dependencies:
+      connect-history-api-fallback: 1.6.0
+      vite: 2.7.13
     dev: true
 
   /vite-tsconfig-paths/3.4.0_vite@2.7.13:
