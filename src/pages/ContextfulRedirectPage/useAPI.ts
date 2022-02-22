@@ -10,7 +10,7 @@ export const useAPI = (context: string, term: string) => {
   const [result, setResult] = useState<
     | { loaded: false; }
     | { loaded: true; status: "bad"; }
-    | { loaded: true; status: "ok"; documents: { "id": string; }[]; }
+    | { loaded: true; status: "ok"; documents: { "id": string; "lines": { id: string; text: string; }[]; }[]; }
   >({ loaded: false });
   const endpoint = useMemo(() => calcEndpoint(context, term), [context, term]);
 

@@ -1,9 +1,12 @@
 import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 import { useAPI } from "./useAPI";
 
-export const ZeroDoc: React.VFC<{ context: string; term: string; }> = (
+export const ZeroDoc: React.VFC<{
+  context: string;
+  term: string;
+}> = (
   { context, term },
 ) => {
   return (
@@ -14,16 +17,25 @@ export const ZeroDoc: React.VFC<{ context: string; term: string; }> = (
   );
 };
 
-export const TooManyDoc: React.VFC<{ context: string; term: string; documents: { id: string; }[]; }> = (
+export const TooManyDoc: React.VFC<
+  {
+    context: string;
+    term: string;
+    documents: { id: string; "lines": { id: string; text: string; }[]; }[];
+  }
+> = (
   { context, term, documents },
 ) => {
   return (
     <div>
       <p>Contextfull</p>
-      <p>
-        <span>{context}</span>
-        <span>{term}</span>
-      </p>
+      <p>Conflict detected for {term} of {context}</p>
+      {documents.map(({ id, lines }) => (
+        <div key={id}>
+          <Link to={`/docs/${id}`}>{id}</Link>
+          <p>{JSON.stringify(lines)}</p>
+        </div>
+      ))}
     </div>
   );
 };
