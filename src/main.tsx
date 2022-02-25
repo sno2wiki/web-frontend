@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { App } from "./App";
 import { ContextfulRedirectPage } from "./pages/ContextfulRedirectPage";
 import { ContextlessRedirectPage } from "./pages/ContextlessRedirectPage";
+import { DocPage } from "./pages/DocPage";
 import { DocumentPage } from "./pages/DocumentPage";
 
 ReactDOM.render(
@@ -14,6 +15,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
+          <Route path="d">
+            <Route path=":id" element={<DocPage />} />
+          </Route>
           <Route path="docs">
             <Route path=":id" element={<DocumentPage />} />
           </Route>
