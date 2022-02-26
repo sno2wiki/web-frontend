@@ -2,7 +2,7 @@ import { EditorValue, Viewer } from "@sno2wiki/editor";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getViewDocWSEndpoint } from "./DocumentPage";
+import { calcLocalRedirectPath, calcViewDocAPIEndpoint } from "~/common/path";
 
 export const ViewDocument: React.VFC<{}> = ({}) => {
   const { id: documentId } = useParams<"id">();
@@ -11,7 +11,7 @@ export const ViewDocument: React.VFC<{}> = ({}) => {
 
   const [exVal, setExVal] = useState<EditorValue | undefined>(undefined);
 
-  const endpoint = useMemo(() => documentId && getViewDocWSEndpoint(documentId), [documentId]);
+  const endpoint = useMemo(() => documentId && calcViewDocAPIEndpoint(documentId), [documentId]);
 
   useEffect(() => {
     if (!endpoint) return;
@@ -54,7 +54,7 @@ export const ViewDocument: React.VFC<{}> = ({}) => {
       {!exVal && <p>LOADING</p>}
       {exVal && (
         <Viewer
-          redirectHref={(context, term) => context ? `/redirects/${context}/${term}` : `/redirects/_/${term}`}
+          redirectHref={calcLocalRedirectPath}
           externalValue={exVal}
         />
       )}

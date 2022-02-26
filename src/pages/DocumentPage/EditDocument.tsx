@@ -2,7 +2,7 @@ import { Editor, EditorValue } from "@sno2wiki/editor";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getEditDocWSEndpoint } from "./DocumentPage";
+import { calcEditDocAPIEndpoint, calcLocalRedirectPath } from "~/common/path";
 
 export const EditDocument: React.VFC<{ ticket: string; }> = ({ ticket }) => {
   const { id: documentId } = useParams<"id">();
@@ -14,7 +14,7 @@ export const EditDocument: React.VFC<{ ticket: string; }> = ({ ticket }) => {
 
   const [exVal, setExVal] = useState<EditorValue | undefined>(undefined);
 
-  const endpoint = useMemo(() => documentId && getEditDocWSEndpoint(documentId), [documentId]);
+  const endpoint = useMemo(() => documentId && calcEditDocAPIEndpoint(documentId), [documentId]);
 
   useEffect(() => {
     if (!endpoint) {
@@ -76,7 +76,7 @@ export const EditDocument: React.VFC<{ ticket: string; }> = ({ ticket }) => {
       {!exVal && <p>LOADING</p>}
       {exVal && (
         <Editor
-          redirectHref={(context, term) => context ? `/redirects/${context}/${term}` : `/redirects/_/${term}`}
+          redirectHref={calcLocalRedirectPath}
           externalValue={exVal}
           pushValue={(value) => {
             setPushVal(value);
