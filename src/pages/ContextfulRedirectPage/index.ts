@@ -1,1 +1,0 @@
-export { ContextfulRedirectPage } from "./ContextfulRedirectPage";
