@@ -1,7 +1,31 @@
 @import "the-new-css-reset/css/reset.css";
 
-html {
-  user-select: none;
+:root {
+  --theme-hue-1: 219.25;
+  --theme-hue-2: 189;
+
+  --root-bg-color: hsl(var(--theme-hue-1), 15%, 25%);
+
+  --nav-bg-color: hsla(var(--theme-hue-1), 50%, 75%, 0.125);
+
+  --editor-bg-color: hsla(var(--theme-hue-1), 35%, 15%, 0.75);
+  --editor-box-shadow: 0 16px 32px hsla(var(--theme-hue-1), 35%, 15%, 0.25);
+
+  --editor-text-color: hsla(var(--theme-hue-1), 25%, 85%);
+  --editor-text-font-family: "PlemolJP", monospace;
+  --editor-text-font-size: 14px;
+
+  --editor-monospace-font-family: "PlemolJP", monospace;
+  --editor-monospace-bg-color: hsla(var(--theme-hue-2), 25%, 85%, 0.25);
+
+  --editor-redirect-text-color: hsla(var(--theme-hue-2), 75%, 70%);
+
+  --editor-redirect-preview-bg-color: hsla(var(--theme-hue-1), 25%, 50%, 0.75);
+  --editor-redirect-preview-text-color: var(--editor-text-color);
+  --editor-redirect-preview-font-size: var(--editor-text-font-size);
+  --editor-redirect-preview-font-family: var(--editor-text-font-family);
+
+  --selection-color: hsla(var(--theme-hue-2), 70%, 85%, 0.5);
 }
 
 body {
@@ -9,6 +33,11 @@ body {
   overflow-y: scroll;
 }
 
+#root {
+  min-height: 100vh;
+  background-color: var(--root-bg-color);
+}
+
 ::selection {
-  background-color: #00f5;
+  background-color: var(--selection-color);
 }

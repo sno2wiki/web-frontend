@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import { Editor, EditorValue } from "@sno2wiki/editor";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -72,17 +73,32 @@ export const EditDocument: React.VFC<{ ticket: string; }> = ({ ticket }) => {
   }, [pushVal]);
 
   return (
-    <>
-      {!exVal && <p>LOADING</p>}
-      {exVal && (
-        <Editor
-          redirectHref={calcLocalRedirectPath}
-          externalValue={exVal}
-          pushValue={(value) => {
-            setPushVal(value);
-          }}
-        />
-      )}
-    </>
+    <div
+      className={css({
+        display: "flex",
+        justifyContent: "center",
+      })}
+    >
+      <div
+        className={css({
+          width: "100%",
+          maxWidth: "960px",
+          padding: "24px 32px",
+          backgroundColor: "var(--editor-bg-color)",
+          boxShadow: "var(--editor-box-shadow)",
+        })}
+      >
+        {!exVal && <p>LOADING</p>}
+        {exVal && (
+          <Editor
+            redirectHref={calcLocalRedirectPath}
+            externalValue={exVal}
+            pushValue={(value) => {
+              setPushVal(value);
+            }}
+          />
+        )}
+      </div>
+    </div>
   );
 };

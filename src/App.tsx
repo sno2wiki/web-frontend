@@ -14,11 +14,20 @@ export const Login: React.VFC = () => {
 export const App: React.VFC = () => {
   return (
     <RecoilRoot>
-      <div className={css({ margin: "64px 64px" /*userSelect: "none" */ })}>
-        <nav>
-          <Login />
+      <div>
+        <nav
+          className={css({
+            padding: "16px 0",
+            backgroundColor: "var(--nav-bg-color)",
+          })}
+        >
+          <div className={css({ maxWidth: "960px", margin: "0 auto" })}>
+            <Login />
+          </div>
         </nav>
-        <Outlet />
+        <div className={css({ margin: "32px 64px" })}>
+          <Outlet />
+        </div>
       </div>
     </RecoilRoot>
   );
