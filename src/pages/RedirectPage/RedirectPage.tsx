@@ -18,7 +18,7 @@ export const PathResolved: React.VFC<{
   const [result, setResult] = useState<
     | { loaded: false; }
     | { loaded: true; status: "bad"; }
-    | { loaded: true; status: "ok"; documents: { "id": string; }[]; }
+    | { loaded: true; status: "ok"; documents: { "slug": string; }[]; }
   >({ loaded: false });
   const endpoint = useMemo(() => calcRedirectAPIEndpoint(context, term), [context, term]);
 
@@ -42,7 +42,7 @@ export const PathResolved: React.VFC<{
   if (!result.loaded) return <></>;
   else if (result.status === "bad") return <>?</>;
   else if (result.documents.length === 1) {
-    return <Navigate to={calcLocalDocPath(result.documents[0].id)} replace={true} />;
+    return <Navigate to={calcLocalDocPath(result.documents[0].slug)} replace={true} />;
   } else if (result.documents.length === 0) {
     return <None context={context} term={term} />;
   } else {
