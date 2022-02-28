@@ -4,19 +4,21 @@
   --theme-hue-1: 219.25;
   --theme-hue-2: 189;
 
+  --base-font-family: "PlemolJP", monospace;
+
   --root-bg-color: hsl(var(--theme-hue-1), 15%, 25%);
 
   --nav-bg-color: hsla(var(--theme-hue-1), 50%, 75%, 0.125);
 
   --editor-bg-color: hsla(var(--theme-hue-1), 35%, 15%, 0.75);
-  --editor-box-shadow: 0 16px 32px hsla(var(--theme-hue-1), 35%, 15%, 0.25);
+  --editor-box-shadow: 0 8px 32px hsla(var(--theme-hue-1), 35%, 15%, 0.25);
 
   --editor-text-color: hsla(var(--theme-hue-1), 25%, 85%);
-  --editor-text-font-family: "PlemolJP", monospace;
+  --editor-text-font-family: var(--base-font-family);
   --editor-text-font-size: 14px;
 
-  --editor-monospace-font-family: "PlemolJP", monospace;
-  --editor-monospace-bg-color: hsla(var(--theme-hue-2), 25%, 85%, 0.25);
+  --editor-text-monospace-font-family: var(--base-font-family);
+  --editor-text-monospace-bg-color: hsla(var(--theme-hue-2), 25%, 85%, 0.25);
 
   --editor-redirect-text-color: hsla(var(--theme-hue-2), 75%, 70%);
 
@@ -24,6 +26,12 @@
   --editor-redirect-preview-text-color: var(--editor-text-color);
   --editor-redirect-preview-font-size: var(--editor-text-font-size);
   --editor-redirect-preview-font-family: var(--editor-text-font-family);
+
+  --redirects-sect-bg-color: hsla(var(--theme-hue-1), 20%, 10%, 0.75);
+  --redirects-sect-box-shadow: 0 8px 32px
+    hsla(var(--theme-hue-1), 20%, 10%, 0.25);
+
+  --redirects-sect-text-color: var(--editor-text-color);
 
   --selection-color: hsla(var(--theme-hue-2), 70%, 85%, 0.5);
 }

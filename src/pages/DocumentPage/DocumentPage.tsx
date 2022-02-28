@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import fetch from "unfetch";
@@ -6,6 +7,7 @@ import { calcEnterDocAPIEndpoint } from "~/common/path";
 import { useAuthToken } from "~/hooks/useAuth";
 
 import { EditDocument } from "./EditDocument";
+import { RedirectsList } from "./RedirectsList";
 import { ViewDocument } from "./ViewDocument";
 
 export const DocumentPage: React.VFC = () => {
@@ -36,9 +38,26 @@ export const DocumentPage: React.VFC = () => {
 
   return (
     <>
-      {ticket === undefined && <>loading</>}
-      {ticket === null && <ViewDocument />}
-      {!!ticket && <EditDocument ticket={ticket} />}
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          maxWidth: "960px",
+          padding: "24px 32px",
+        })}
+      >
+        <RedirectsList slug={documentId} />
+        <div
+          className={css({
+            marginTop: "12px",
+          })}
+        >
+          {ticket === undefined && <>loading</>}
+          {ticket === null && <ViewDocument />}
+          {!!ticket && <EditDocument ticket={ticket} />}
+        </div>
+      </div>
     </>
   );
 };

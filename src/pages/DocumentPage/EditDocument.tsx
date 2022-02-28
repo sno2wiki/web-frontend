@@ -75,30 +75,23 @@ export const EditDocument: React.VFC<{ ticket: string; }> = ({ ticket }) => {
   return (
     <div
       className={css({
-        display: "flex",
-        justifyContent: "center",
+        width: "100%",
+        maxWidth: "960px",
+        padding: "24px 32px",
+        backgroundColor: "var(--editor-bg-color)",
+        boxShadow: "var(--editor-box-shadow)",
       })}
     >
-      <div
-        className={css({
-          width: "100%",
-          maxWidth: "960px",
-          padding: "24px 32px",
-          backgroundColor: "var(--editor-bg-color)",
-          boxShadow: "var(--editor-box-shadow)",
-        })}
-      >
-        {!exVal && <p>LOADING</p>}
-        {exVal && (
-          <Editor
-            redirectHref={calcLocalRedirectPath}
-            externalValue={exVal}
-            pushValue={(value) => {
-              setPushVal(value);
-            }}
-          />
-        )}
-      </div>
+      {!exVal && <p>LOADING</p>}
+      {exVal && (
+        <Editor
+          redirectHref={calcLocalRedirectPath}
+          externalValue={exVal}
+          pushValue={(value) => {
+            setPushVal(value);
+          }}
+        />
+      )}
     </div>
   );
 };
