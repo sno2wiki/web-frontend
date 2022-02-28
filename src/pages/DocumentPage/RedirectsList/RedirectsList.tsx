@@ -1,6 +1,8 @@
 import { css } from "@emotion/css";
 import useSWR from "swr";
 
+import { ListItem } from "./RedirectItem";
+
 export const calcGetDocRedirectsAPIEndpoint = (slug: string) => {
   const url = new URL(
     `/docs/${slug}/redirects`,
@@ -35,37 +37,16 @@ export const RedirectsList: React.VFC<{ slug: string | undefined; }> = ({ slug }
         Redirects
       </p>
       {data && (
-        <ul
-          className={css({
-            marginTop: "8px",
-          })}
-        >
+        <ul className={css({ marginTop: "8px" })}>
           {data.redirects.map((redirect, i) => (
-            <li
+            <ListItem
               key={i}
               className={css({
                 marginTop: "8px",
               })}
-            >
-              <span
-                className={css({
-                  color: "var(--redirects-sect-text-color)",
-                  fontFamily: "var(--base-font-family)",
-                  fontSize: "14px",
-                  userSelect: "all",
-                })}
-              >
-                {"["}
-                <span className={css({ fontWeight: "bold" })}>
-                  {redirect.context}
-                </span>
-                {"=>"}
-                <span className={css({ fontWeight: "bold" })}>
-                  {redirect.term}
-                </span>
-                {"]"}
-              </span>
-            </li>
+              context={redirect.context}
+              term={redirect.term}
+            />
           ))}
         </ul>
       )}

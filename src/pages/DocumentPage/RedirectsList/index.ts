@@ -1,0 +1,1 @@
+export { RedirectsList } from "./RedirectsList";
