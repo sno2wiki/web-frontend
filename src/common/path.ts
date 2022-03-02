@@ -39,12 +39,12 @@ export const calcEndpointFindRedirects = (
   return url.toString();
 };
 
-export const calcEndpointNewRedirect = (
+export const calcEndpointAddRedirect = (
   slug: string,
   context: string,
   term: string,
 ) => {
-  const url = new URL(`/redirects/new`, import.meta.env.VITE_HTTP_ENDPOINT);
+  const url = new URL(`/redirects/add`, import.meta.env.VITE_HTTP_ENDPOINT);
 
   url.searchParams.set("slug", slug);
   url.searchParams.set("context", context);

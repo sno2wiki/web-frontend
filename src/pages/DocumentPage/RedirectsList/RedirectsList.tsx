@@ -3,7 +3,7 @@ import ky from "ky";
 import { useCallback } from "react";
 import useSWR from "swr";
 
-import { calcEndpointDocRedirects, calcEndpointNewRedirect } from "~/common/path";
+import { calcEndpointAddRedirect, calcEndpointDocRedirects } from "~/common/path";
 
 import { AddRedirect } from "./AddRedirect";
 import { ListItem } from "./RedirectItem";
@@ -16,7 +16,7 @@ export const RedirectsList: React.VFC<{ slug: string | undefined; }> = ({ slug }
   const add = useCallback(async (context: string, term: string) => {
     if (!slug) return;
 
-    await ky.put(calcEndpointNewRedirect(slug, context, term)).json();
+    await ky.put(calcEndpointAddRedirect(slug, context, term)).json();
     await mutate();
   }, [mutate, slug]);
 
