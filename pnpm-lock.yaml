@@ -25,6 +25,7 @@ specifiers:
   eslint-plugin-simple-import-sort: ^7.0.0
   eslint-plugin-unused-imports: ^2.0.0
   jest: ^27.5.1
+  ky: ^0.29.0
   nanoid: ^3.2.0
   npm-run-all: ^4.1.5
   react: ^17.0.2
@@ -46,6 +47,7 @@ dependencies:
   '@sno2wiki/editor': link:packages/editor
   '@sno2wiki/viewer': link:packages/viewer
   direction: 2.0.1
+  ky: 0.29.0
   nanoid: 3.2.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -3475,6 +3477,11 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
     dev: true
+
+  /ky/0.29.0:
+    resolution: {integrity: sha512-01TBSOqlHmLfcQhHseugGHLxPtU03OyZWaLDWt5MfzCkijG6xWFvAQPhKVn0cR2MMjYvBP9keQ8A3+rQEhLO5g==}
+    engines: {node: '>=12'}
+    dev: false
 
   /leven/3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}

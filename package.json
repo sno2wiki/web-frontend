@@ -18,6 +18,7 @@
     "@sno2wiki/editor": "link:packages/editor",
     "@sno2wiki/viewer": "link:packages/viewer",
     "direction": "^2.0.1",
+    "ky": "^0.29.0",
     "nanoid": "^3.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
