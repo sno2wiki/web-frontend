@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 import { Editor, EditorValue } from "@sno2wiki/editor";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { calcEditDocAPIEndpoint, calcLocalRedirectPath } from "~/common/path";
+import { calcEndpointEditDoc, calcLocalRedirectPath } from "~/common/path";
 
 export const EditDocument: React.VFC<{ slug: string; ticket: string; }> = ({ slug, ticket }) => {
   const wsRef = useRef<WebSocket | undefined>(undefined);
@@ -12,7 +12,7 @@ export const EditDocument: React.VFC<{ slug: string; ticket: string; }> = ({ slu
 
   const [exVal, setExVal] = useState<EditorValue | undefined>(undefined);
 
-  const endpoint = useMemo(() => slug && calcEditDocAPIEndpoint(slug), [slug]);
+  const endpoint = useMemo(() => slug && calcEndpointEditDoc(slug), [slug]);
 
   useEffect(() => {
     if (!endpoint) {

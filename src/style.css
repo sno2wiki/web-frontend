@@ -4,7 +4,7 @@
   --theme-hue-1: 219.25;
   --theme-hue-2: 189;
 
-  --base-font-family: "PlemolJP", monospace;
+  --base-font-family: "PlemolJP Console", monospace;
 
   --root-bg-color: hsl(var(--theme-hue-1), 15%, 25%);
 
@@ -15,7 +15,7 @@
 
   --editor-text-color: hsla(var(--theme-hue-1), 25%, 85%);
   --editor-text-font-family: var(--base-font-family);
-  --editor-text-font-size: 14px;
+  --editor-text-font-size: 0.875rem;
 
   --editor-text-monospace-font-family: var(--base-font-family);
   --editor-text-monospace-bg-color: hsla(var(--theme-hue-2), 25%, 85%, 0.25);

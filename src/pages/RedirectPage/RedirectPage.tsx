@@ -1,8 +1,8 @@
+import ky from "ky";
 import React, { useEffect, useMemo, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import fetch from "unfetch";
 
-import { calcLocalDocPath, calcRedirectAPIEndpoint } from "~/common/path";
+import { calcEndpointFindRedirects, calcLocalDocPath } from "~/common/path";
 
 import { None } from "./None";
 import { TooMany } from "./TooMany";
@@ -20,21 +20,13 @@ export const PathResolved: React.VFC<{
     | { loaded: true; status: "bad"; }
     | { loaded: true; status: "ok"; documents: { "slug": string; }[]; }
   >({ loaded: false });
-  const endpoint = useMemo(() => calcRedirectAPIEndpoint(context, term), [context, term]);
+  const endpoint = useMemo(() => calcEndpointFindRedirects(context, term), [context, term]);
 
   useEffect(() => {
     if (!endpoint) return;
     (async () => {
       const headers = { "Cache-Control": "no-store" };
-      const { ok, json } = await fetch(endpoint, { headers });
-      if (!ok) {
-        setResult({ loaded: true, status: "bad" });
-        return;
-      }
-
-      const { documents } = await json();
-      console.dir(await json());
-
+      const { documents } = await ky.get(endpoint, { headers }).json<{ documents: { slug: string; }[]; }>();
       setResult({ loaded: true, status: "ok", documents });
     })();
   }, [endpoint]);

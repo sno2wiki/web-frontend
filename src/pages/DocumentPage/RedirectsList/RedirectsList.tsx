@@ -3,40 +3,20 @@ import ky from "ky";
 import { useCallback } from "react";
 import useSWR from "swr";
 
+import { calcEndpointDocRedirects, calcEndpointNewRedirect } from "~/common/path";
+
 import { AddRedirect } from "./AddRedirect";
 import { ListItem } from "./RedirectItem";
 
-export const calcNewRedirectAPIEndpoint = (
-  slug: string,
-  context: string,
-  term: string,
-) => {
-  const url = new URL(`/redirects/new`, import.meta.env.VITE_HTTP_ENDPOINT);
-
-  url.searchParams.set("slug", slug);
-  url.searchParams.set("context", context);
-  url.searchParams.set("term", term);
-
-  return url.toString();
-};
-
-export const calcGetDocRedirectsAPIEndpoint = (slug: string) => {
-  const url = new URL(
-    `/docs/${slug}/redirects`,
-    import.meta.env.VITE_HTTP_ENDPOINT,
-  );
-  return url.toString();
-};
-
 export const RedirectsList: React.VFC<{ slug: string | undefined; }> = ({ slug }) => {
   const { data, mutate } = useSWR<{ redirects: { context: string; term: string; }[]; }>(
-    () => slug && calcGetDocRedirectsAPIEndpoint(slug),
+    () => slug && calcEndpointDocRedirects(slug),
   );
 
   const add = useCallback(async (context: string, term: string) => {
     if (!slug) return;
 
-    await ky.put(calcNewRedirectAPIEndpoint(slug, context, term)).json();
+    await ky.put(calcEndpointNewRedirect(slug, context, term)).json();
     await mutate();
   }, [mutate, slug]);
 

@@ -3,7 +3,7 @@ import ky from "ky";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "react-use";
 
-import { calcRedirectAPIEndpoint } from "~/common/path";
+import { calcEndpointFindRedirects } from "~/common/path";
 
 export const AddRedirect: React.VFC<{ className?: string; addRedirect(context: string, term: string): void; }> = (
   { className, addRedirect },
@@ -29,7 +29,7 @@ export const AddRedirect: React.VFC<{ className?: string; addRedirect(context: s
       if (!splited) return;
 
       const { documents } = await ky
-        .get(calcRedirectAPIEndpoint(splited.context, splited.term))
+        .get(calcEndpointFindRedirects(splited.context, splited.term))
         .json<{ documents: []; }>();
 
       if (1 <= documents.length) setConflicted(true);
