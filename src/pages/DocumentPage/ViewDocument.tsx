@@ -1,18 +1,15 @@
 import { css } from "@emotion/css";
 import { EditorValue, Viewer } from "@sno2wiki/editor";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { calcLocalRedirectPath, calcViewDocAPIEndpoint } from "~/common/path";
 
-export const ViewDocument: React.VFC<{}> = ({}) => {
-  const { id: documentId } = useParams<"id">();
-
+export const ViewDocument: React.VFC<{ slug: string; }> = ({ slug }) => {
   const wsRef = useRef<WebSocket | undefined>(undefined);
 
   const [exVal, setExVal] = useState<EditorValue | undefined>(undefined);
 
-  const endpoint = useMemo(() => documentId && calcViewDocAPIEndpoint(documentId), [documentId]);
+  const endpoint = useMemo(() => slug && calcViewDocAPIEndpoint(slug), [slug]);
 
   useEffect(() => {
     if (!endpoint) return;

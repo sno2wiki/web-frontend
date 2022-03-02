@@ -10,10 +10,8 @@ import { EditDocument } from "./EditDocument";
 import { RedirectsList } from "./RedirectsList";
 import { ViewDocument } from "./ViewDocument";
 
-export const DocumentPage: React.VFC = () => {
-  const { id: documentId } = useParams<"id">();
-
-  const endpoint = useMemo(() => documentId && calcEnterDocAPIEndpoint(documentId), [documentId]);
+export const DC: React.VFC<{ slug: string; }> = ({ slug }) => {
+  const endpoint = useMemo(() => calcEnterDocAPIEndpoint(slug), [slug]);
   const [authToken] = useAuthToken();
 
   const [ticket, setTicket] = useState<string | null | undefined>(undefined);
@@ -47,17 +45,24 @@ export const DocumentPage: React.VFC = () => {
           padding: "24px 32px",
         })}
       >
-        <RedirectsList slug={documentId} />
+        <RedirectsList slug={slug} />
         <div
           className={css({
             marginTop: "12px",
           })}
         >
           {ticket === undefined && <>loading</>}
-          {ticket === null && <ViewDocument />}
-          {!!ticket && <EditDocument ticket={ticket} />}
+          {ticket === null && <ViewDocument slug={slug} />}
+          {!!ticket && <EditDocument ticket={ticket} slug={slug} />}
         </div>
       </div>
     </>
   );
+};
+
+export const DocumentPage: React.VFC = () => {
+  const { id: slug } = useParams<"id">();
+
+  if (!slug) return <p>LOADING</p>;
+  return <DC slug={slug} />;
 };
