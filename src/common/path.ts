@@ -44,11 +44,33 @@ export const calcEndpointAddRedirect = (
   context: string,
   term: string,
 ) => {
-  const url = new URL(`/redirects/add`, import.meta.env.VITE_HTTP_ENDPOINT);
+  const url = new URL(`/add/redirect`, import.meta.env.VITE_HTTP_ENDPOINT);
 
   url.searchParams.set("slug", slug);
   url.searchParams.set("context", context);
   url.searchParams.set("term", term);
+
+  return url.toString();
+};
+
+export const calcEndpointAddDoc = (
+  context: string,
+  term: string,
+) => {
+  const url = new URL(`/add/doc`, import.meta.env.VITE_HTTP_ENDPOINT);
+
+  url.searchParams.set("context", context);
+  url.searchParams.set("term", term);
+
+  return url.toString();
+};
+
+export const calcEndpointSearch = (
+  query: string,
+) => {
+  const url = new URL(`/search`, import.meta.env.VITE_HTTP_ENDPOINT);
+
+  url.searchParams.set("query", query);
 
   return url.toString();
 };
