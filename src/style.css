@@ -10,6 +10,9 @@
 
   --nav-bg-color: hsla(var(--theme-hue-1), 50%, 75%, 0.125);
 
+  --nav-searchbox-bg-color: hsla(var(--theme-hue-1), 35%, 15%, 0.75);
+  --nav-searchbox-text-color: hsla(var(--theme-hue-1), 25%, 85%);
+
   --editor-bg-color: hsla(var(--theme-hue-1), 35%, 15%, 0.75);
   --editor-box-shadow: 0 8px 32px hsla(var(--theme-hue-1), 35%, 15%, 0.25);
 
